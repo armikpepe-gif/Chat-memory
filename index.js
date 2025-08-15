@@ -1,53 +1,17 @@
-const fs = require('fs');
-const path = require('path');
-const express = require('express');
-const bodyParser = require('body-parser');
+const http = require('http');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// مسیر فایل حافظه
-const memoryFile = path.join(__dirname, 'memory.json');
-
-// تابع خواندن حافظه
-function readMemory() {
-    try {
-        const data = fs.readFileSync(memoryFile, 'utf8');
-        return JSON.parse(data);
-    } catch (err) {
-        return { messages: [] };
-    }
-}
-
-// تابع ذخیره حافظه
-function saveMemory(memory) {
-    fs.writeFileSync(memoryFile, JSON.stringify(memory, null, 2));
-}
-
-app.use(bodyParser.json());
-
-// دریافت تمام پیام‌ها
-app.get('/messages', (req, res) => {
-    const memory = readMemory();
-    res.json(memory);
+const server = http.createServer((req, res) => {
+  res.end('Hello World');
 });
 
-// افزودن پیام جدید
-app.post('/messages', (req, res) => {
-    const { user, text } = req.body;
-    if (!user || !text) {
-        return res.status(400).json({ error: 'User and text are required' });
-    }
+server.listen(3000, () => {
+  console.log('Server running on port 3000');
 
-    const memory = readMemory();
-    const message = { user, text, time: new Date().toISOString() };
-
-    memory.messages.push(message);
-    saveMemory(memory);
-
-    res.json({ success: true, message });
-});
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  // بعد از 3 ثانیه سرور رو خاموش کن
+  setTimeout(() => {
+    server.close(() => {
+      console.log('Server stopped');
+      process.exit(0); // بستن پروسه
+    });
+  }, 3000);
 });
