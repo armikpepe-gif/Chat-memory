@@ -2,29 +2,27 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-    - name: Setup Node.js
+    - name: Use Node.js 18
       uses: actions/setup-node@v3
       with:
         node-version: 18
-        cache: 'npm'
 
-    - name: Install dependencies
-      run: npm install
+    - name: Install dependencies (no lock file check)
+      run: npm install --no-package-lock
 
-    - name: Build project (optional)
+    - name: Build
       run: npm run build --if-present
 
-    - name: Run tests (optional)
+    - name: Run tests
       run: npm test --if-present
