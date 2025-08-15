@@ -1,17 +1,6 @@
-const http = require('http');
+console.log("🚀 Starting script...");
 
-const server = http.createServer((req, res) => {
-  res.end('Hello World');
-});
-
-server.listen(3000, () => {
-  console.log('Server running on port 3000');
-
-  // بعد از 3 ثانیه سرور رو خاموش کن
-  setTimeout(() => {
-    server.close(() => {
-      console.log('Server stopped');
-      process.exit(0); // بستن پروسه
-    });
-  }, 3000);
-});
+setTimeout(() => {
+  console.log("✅ All tasks completed successfully!");
+  process.exit(0); // خروج از برنامه
+}, 2000);
