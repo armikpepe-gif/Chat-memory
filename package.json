@@ -1,15 +1,18 @@
 {
   "name": "chat-memory",
   "version": "1.0.0",
-  "description": "Minimal Node.js server for Render",
-  "main": "index.js",
+  "description": "Persistent memory server + lightweight PWA client",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
-  },
-  "engines": {
-    "node": "18.x"
+    "start": "node server.js",
+    "start:dev": "NODE_ENV=development node server.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "@supabase/supabase-js": "2.45.4",
+    "cors": "2.8.5",
+    "express": "4.19.2",
+    "helmet": "7.1.0",
+    "morgan": "1.10.0",
+    "rate-limiter-flexible": "2.5.3"
   }
 }
